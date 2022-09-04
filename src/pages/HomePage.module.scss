@@ -1,0 +1,33 @@
+.paginator {
+  display: flex;
+  justify-content: center;
+
+  :global {
+    li {
+      a {
+        width: 40px;
+        height: 40px;
+        border: 2px solid #4b4b4b;
+        border-radius: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        //font-weight: bold;
+        color: #4b4b4b;
+
+        &:hover {
+          color: white;
+          background-color: #4b4b4b;
+        }
+        &:active {
+          background-color: darken(#4b4b4b, 10%);
+        }
+      }
+
+      &:not(:last-child) {
+        margin-right: 8px;
+      }
+    }
+  }
+}

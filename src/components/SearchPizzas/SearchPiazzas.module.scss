@@ -1,0 +1,33 @@
+.root {
+  position: relative;
+}
+
+input {
+  width: 250px;
+  height: 40px;
+  padding: 3px 3px 3px 35px;
+  font-size: 16pt;
+  border-radius: 30px;
+  border: 2px solid #4b4b4b;
+  transition: width 0.2s;
+}
+
+.search {
+  fill: #4b4b4b;
+  position: absolute;
+  z-index: 998;
+  top: 10px;
+  left: 10px;
+  width: 20px;
+  cursor: pointer;
+}
+
+.cancel {
+  fill: #4b4b4b;
+  position: absolute;
+  z-index: 999;
+  top: 13px;
+  right: 10px;
+  width: 15px;
+  cursor: pointer;
+}
