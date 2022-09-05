@@ -1,4 +1,5 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { setSortValue } from '../../redux/slices/filterSlice';
 
@@ -10,11 +11,24 @@ export const sortOptions = [
 
 const SortPizzas = () => {
   const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
+  const sortRef = useRef(null);
+
   const {
     filter: { sortType },
   } = useSelector((state) => state);
 
-  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.path.includes(sortRef.current)) {
+        setOpen(false);
+      }
+    };
+
+    document.body.addEventListener('click', handleClickOutside);
+
+    return () => document.body.removeEventListener('click', handleClickOutside);
+  });
 
   const handleOpenSort = (event) => {
     event.stopPropagation();
@@ -27,7 +41,7 @@ const SortPizzas = () => {
   };
 
   return (
-    <div className='sort'>
+    <div ref={sortRef} className='sort'>
       <div className='sort__label'>
         <svg
           width='10'

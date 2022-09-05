@@ -20,8 +20,6 @@ export const filtersSlice = createSlice({
       state.sortType = action.payload;
     },
     setFilters(state, action) {
-      console.log(action);
-
       state.categoryId = +action.payload.categoryId;
       state.pageCount = +action.payload.pageCount;
       state.sortType = action.payload.sortType;

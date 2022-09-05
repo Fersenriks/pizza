@@ -1,16 +1,16 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
 
 import qs from 'qs';
-import Categories from '../components/Categories/Categories';
-import SortPizzas, { sortOptions } from '../components/Sort-pizzas/SortPizzas';
-import PizzaSkeleton from '../components/Pizza-block/PizzaSkeleton';
-import PizzaBlock from '../components/Pizza-block/PizzaBlock';
+import Categories from '../../components/Categories/Categories';
+import SortPizzas, { sortOptions } from '../../components/Sort-pizzas/SortPizzas';
+import PizzaSkeleton from '../../components/Pizza-block/PizzaSkeleton';
+import PizzaBlock from '../../components/Pizza-block/PizzaBlock';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
-import { setPageCount, setFilters } from '../redux/slices/filterSlice';
-import Paginator from '../components/Paginator';
+import { setPageCount, setFilters } from '../../redux/slices/filterSlice';
+import Paginator from '../../components/Paginator';
 
 const HomePage = () => {
   const dispatch = useDispatch();
