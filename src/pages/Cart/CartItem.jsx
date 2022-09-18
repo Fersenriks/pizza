@@ -1,8 +1,24 @@
 import React from 'react';
 import classes from './Cart.module.scss';
 import clsx from 'clsx';
+import { useDispatch } from 'react-redux';
+import { decPizza, incPizza, removePizza } from '../../redux/slices/cartSlice';
 
-const CartItem = () => {
+const CartItem = ({ count, title, price, id }) => {
+  const dispatch = useDispatch();
+
+  const pizzaItemInc = () => {
+    dispatch(incPizza(id));
+  };
+
+  const pizzaItemDec = () => {
+    dispatch(decPizza(id));
+  };
+
+  const removePizzas = () => {
+    dispatch(removePizza(id));
+  };
+
   return (
     <div className={classes.cart__item}>
       <div className={classes.cart__item_title}>
@@ -14,13 +30,13 @@ const CartItem = () => {
           />
         </div>
         <div>
-          <h3>Сырный цыпленок</h3>
+          <h3>{title}</h3>
           <p>тонкое тесто, 26 см.</p>
         </div>
       </div>
       <div className={classes.cart__item_tools}>
         <div className={classes.cart__item_count}>
-          <div className={clsx(classes.button, classes.button__circle)}>
+          <div onClick={pizzaItemDec} className={clsx(classes.button, classes.button__circle)}>
             <svg
               width='10'
               height='10'
@@ -34,8 +50,8 @@ const CartItem = () => {
               />
             </svg>
           </div>
-          <b>2</b>
-          <div className={clsx(classes.button, classes.button__circle)}>
+          <b>{count}</b>
+          <div onClick={pizzaItemInc} className={clsx(classes.button, classes.button__circle)}>
             <svg
               width='10'
               height='10'
@@ -55,10 +71,10 @@ const CartItem = () => {
           </div>
         </div>
         <div className={classes.cart__item_price}>
-          <b>770 ₽</b>
+          <b>{price * count} €</b>
         </div>
         <div className={classes.cart__item_remove}>
-          <div className={clsx(classes.button, classes.button__circle)}>
+          <div onClick={removePizzas} className={clsx(classes.button, classes.button__circle)}>
             <svg
               width='10'
               height='10'

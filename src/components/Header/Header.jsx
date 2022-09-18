@@ -1,15 +1,19 @@
 import React from 'react';
 
-import logoSvg from '../../assets/img/pizza-logo.svg';
 import { Link, useLocation } from 'react-router-dom';
 import SearchPizzas from '../SearchPizzas';
 import { useSelector } from 'react-redux';
+
+import logoSvg from '../../assets/img/pizza-logo.svg';
+import { roundTo } from 'round-to';
 
 const Header = () => {
   const {
     cart: { totalPrice, items },
   } = useSelector((state) => state);
   const { pathname } = useLocation();
+
+  const countTotalAmount = items.map((item) => item.count).reduce((sum, acc) => sum + acc, 0);
 
   return (
     <header className='header'>
@@ -26,7 +30,7 @@ const Header = () => {
         {pathname === '/' && <SearchPizzas placeholder={'Поиск пиццы...'} />}
         <div className='header__cart'>
           <Link to='/cart' className='button button--cart'>
-            <span>{totalPrice} €</span>
+            <span>{roundTo(totalPrice, 2)} €</span>
             <div className='button__delimiter' />
             <svg
               width='18'
@@ -57,7 +61,7 @@ const Header = () => {
                 strokeLinejoin='round'
               />
             </svg>
-            <span>{items.length}</span>
+            <span>{countTotalAmount}</span>
           </Link>
         </div>
       </div>

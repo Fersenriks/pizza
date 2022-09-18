@@ -3,10 +3,19 @@ import React from 'react';
 import classes from './Cart.module.scss';
 import CartItem from './CartItem';
 import CartBottom from './CartBottom';
-
-// import '../App.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { deletePizzas } from '../../redux/slices/cartSlice';
 
 const Cart = () => {
+  const dispatch = useDispatch();
+  const {
+    cart: { items },
+  } = useSelector((state) => state);
+
+  const onClearCart = () => {
+    dispatch(deletePizzas());
+  };
+
   return (
     <div className={`${classes.container} ${classes.content__items}`}>
       <div className={`${classes.cart}`}>
@@ -80,11 +89,14 @@ const Cart = () => {
                 strokeLinejoin='round'
               />
             </svg>
-            <span>Очистить корзину</span>
+            <span onClick={onClearCart}>Очистить корзину</span>
           </div>
         </div>
-        <CartItem />
-        <CartItem />
+        {items.map((pizza, id) => (
+          <CartItem key={id} {...pizza} />
+        ))}
+        {/*<CartItem />*/}
+        {/*/!*<CartItem />*!/*/}
         <CartBottom />
       </div>
     </div>

@@ -1,20 +1,29 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import classes from './Cart.module.scss';
 import clsx from 'clsx';
+import { useSelector } from 'react-redux';
+import { roundTo } from 'round-to';
+import { Link } from 'react-router-dom';
 
 const CartBottom = () => {
+  const {
+    cart: { totalPrice, items },
+  } = useSelector((state) => state);
+
+  const countTotalAmount = items.map((item) => item.count).reduce((sum, acc) => sum + acc, 0);
+
   return (
     <div className={classes.cart__bottom}>
       <div className={classes.cart__bottom_details}>
         <span>
-          Всего пицц: <b>3 шт.</b>
+          Amount: <b>{countTotalAmount ? countTotalAmount : 0}</b>
         </span>
         <span>
-          Сумма заказа: <b>900 ₽</b>
+          Сумма заказа: <b>{roundTo(totalPrice, 2)} €</b>
         </span>
       </div>
       <div className={classes.cart__bottom_buttons}>
-        <a className={clsx(classes.button, classes.button__outlined)} href='/'>
+        <Link className={clsx(classes.button, classes.button__outlined)} to='/'>
           <svg
             width='8'
             height='14'
@@ -32,7 +41,7 @@ const CartBottom = () => {
           </svg>
 
           <span>Вернуться назад</span>
-        </a>
+        </Link>
         <div className={`${classes.button}`}>
           <span>Оплатить сейчас</span>
         </div>
