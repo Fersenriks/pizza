@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import classes from './Cart.module.scss';
 import clsx from 'clsx';
 import { useSelector } from 'react-redux';

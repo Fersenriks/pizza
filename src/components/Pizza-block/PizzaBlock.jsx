@@ -13,7 +13,7 @@ const PizzaBlock = ({ id, price, title, imageUrl, sizes, types }) => {
     dispatch(addPizza({ id, price, title, imageUrl, sizes }));
   };
 
-  const pizzaTypes = useMemo(() => ['тонкое', 'традиционное'], []);
+  const pizzaTypes = useMemo(() => ['Thin', 'Traditional'], []);
 
   return (
     <div className='pizza-block'>
@@ -38,13 +38,13 @@ const PizzaBlock = ({ id, price, title, imageUrl, sizes, types }) => {
               className={pizzaSize === index ? 'active' : ''}
               key={index}
             >
-              {size} см.
+              {size} cm.
             </li>
           ))}
         </ul>
       </div>
       <div className='pizza-block__bottom'>
-        <div className='pizza-block__price'>от {price} €</div>
+        <div className='pizza-block__price'>by {price} €</div>
         <div onClick={handleAddPizza} className='button button--outline button--add'>
           <svg
             width='12'
@@ -58,7 +58,7 @@ const PizzaBlock = ({ id, price, title, imageUrl, sizes, types }) => {
               fill='white'
             />
           </svg>
-          <span>Добавить</span>
+          <span>Add</span>
           {pizzaCount ? <i>{pizzaCount}</i> : null}
         </div>
       </div>
