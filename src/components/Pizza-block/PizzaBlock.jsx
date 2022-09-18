@@ -1,12 +1,16 @@
 import React, { useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addPizza } from '../../redux/slices/cartSlice';
 
-const PizzaBlock = ({ price, title, imageUrl, sizes, types }) => {
+const PizzaBlock = ({ id, price, title, imageUrl, sizes, types }) => {
+  const dispatch = useDispatch();
   const [pizzaCount, setPizzaCount] = useState(0);
   const [pizzaType, setPizzaType] = useState(0);
   const [pizzaSize, setPizzaSize] = useState(0);
 
   const handleAddPizza = () => {
     setPizzaCount((prevState) => prevState + 1);
+    dispatch(addPizza({ id, price, title, imageUrl, sizes }));
   };
 
   const pizzaTypes = useMemo(() => ['тонкое', 'традиционное'], []);
@@ -40,7 +44,7 @@ const PizzaBlock = ({ price, title, imageUrl, sizes, types }) => {
         </ul>
       </div>
       <div className='pizza-block__bottom'>
-        <div className='pizza-block__price'>от {Math.floor((price / 55) * 100) / 100} €</div>
+        <div className='pizza-block__price'>от {price} €</div>
         <div onClick={handleAddPizza} className='button button--outline button--add'>
           <svg
             width='12'

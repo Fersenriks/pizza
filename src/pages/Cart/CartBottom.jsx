@@ -1,24 +1,20 @@
 import React from 'react';
 import classes from './Cart.module.scss';
+import clsx from 'clsx';
 
 const CartBottom = () => {
   return (
     <div className={classes.cart__bottom}>
       <div className={classes.cart__bottom_details}>
         <span>
-          {' '}
-          Всего пицц: <b>3 шт.</b>{' '}
+          Всего пицц: <b>3 шт.</b>
         </span>
         <span>
-          {' '}
-          Сумма заказа: <b>900 ₽</b>{' '}
+          Сумма заказа: <b>900 ₽</b>
         </span>
       </div>
       <div className={classes.cart__bottom_buttons}>
-        <a
-          href='/'
-          className={`${classes.button} ${classes.button__outline} ${classes.button__add}`}
-        >
+        <a className={clsx(classes.button, classes.button__outlined)} href='/'>
           <svg
             width='8'
             height='14'
@@ -37,7 +33,7 @@ const CartBottom = () => {
 
           <span>Вернуться назад</span>
         </a>
-        <div className={`${classes.button} ${classes.pay_btn}`}>
+        <div className={`${classes.button}`}>
           <span>Оплатить сейчас</span>
         </div>
       </div>

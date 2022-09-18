@@ -84,6 +84,7 @@ const Cart = () => {
           </div>
         </div>
         <CartItem />
+        <CartItem />
         <CartBottom />
       </div>
     </div>
