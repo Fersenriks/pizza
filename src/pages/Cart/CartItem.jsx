@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import classes from './Cart.module.scss';
 import clsx from 'clsx';
 import { useDispatch } from 'react-redux';
 import { decPizza, incPizza, removePizza } from '../../redux/slices/cartSlice';
 
-const CartItem = ({ count, title, price, id }) => {
+const CartItem = ({ count, title, price, id, imageUrl }) => {
   const dispatch = useDispatch();
 
   const pizzaItemInc = () => {
@@ -23,11 +23,7 @@ const CartItem = ({ count, title, price, id }) => {
     <div className={classes.cart__item}>
       <div className={classes.cart__item_title}>
         <div className={classes.cart__item_img}>
-          <img
-            className={classes.pizza_block__image}
-            src='https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg'
-            alt='Pizza'
-          />
+          <img className={classes.pizza_block__image} src={imageUrl} alt='Pizza' />
         </div>
         <div>
           <h3>{title}</h3>
@@ -98,4 +94,4 @@ const CartItem = ({ count, title, price, id }) => {
   );
 };
 
-export default CartItem;
+export default memo(CartItem);

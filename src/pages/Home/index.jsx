@@ -2,9 +2,9 @@ import React, { memo, useEffect, useRef, useState } from 'react';
 
 import qs from 'qs';
 import Categories from '../../components/Categories/Categories';
-import SortPizzas, { sortOptions } from '../../components/Sort-pizzas/SortPizzas';
-import PizzaSkeleton from '../../components/Pizza-block/PizzaSkeleton';
-import PizzaBlock from '../../components/Pizza-block/PizzaBlock';
+import SortPizzas, { sortOptions } from '../../components/SortPizzas/SortPizzas';
+import PizzaSkeleton from '../../components/PizzaBlock/PizzaSkeleton';
+import PizzaBlock from '../../components/PizzaBlock/PizzaBlock';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 

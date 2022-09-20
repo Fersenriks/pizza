@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import classes from './Cart.module.scss';
 import CartItem from './CartItem';
 import CartBottom from './CartBottom';
 import { useDispatch, useSelector } from 'react-redux';
 import { deletePizzas } from '../../redux/slices/cartSlice';
-import CartEmpty from './Cart-empty/CartEmpty';
+import CartEmpty from './CartEmpty/CartEmpty';
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -106,4 +106,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default memo(Cart);
