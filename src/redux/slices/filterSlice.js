@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   categoryId: 0,
   pageCount: 0,
-  sortType: { label: 'Популярности', sortValue: 'rating' },
+  sortType: { label: 'Popularity', sortValue: 'rating' },
 };
 
 export const filtersSlice = createSlice({
@@ -12,6 +12,7 @@ export const filtersSlice = createSlice({
   reducers: {
     setCategoryId(state, action) {
       state.categoryId = action.payload;
+      state.pageCount = 0;
     },
     setPageCount(state, action) {
       state.pageCount = action.payload;

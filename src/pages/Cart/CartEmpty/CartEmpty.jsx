@@ -8,9 +8,7 @@ import classes from './CartEmpty.module.scss';
 const CartEmpty = () => {
   return (
     <div className={classes.cart__empty}>
-      <h2>
-        Empty cart <icon>😕</icon>
-      </h2>
+      <h2>Empty cart 😕</h2>
       <p>
         You probably haven't ordered pizza yet.
         <br />

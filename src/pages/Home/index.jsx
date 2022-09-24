@@ -8,40 +8,25 @@ import PizzaBlock from '../../components/PizzaBlock/PizzaBlock';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import axios from 'axios';
 import { setPageCount, setFilters } from '../../redux/slices/filterSlice';
 import Paginator from '../../components/Paginator';
+import { fetchPizzas } from '../../redux/slices/pizzaSlice';
 
 const HomePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [pagePag, setPagePag] = useState(0);
+  const {
+    pizza: { items, loading, count },
+  } = useSelector((state) => state);
 
   const isMounted = useRef(false);
   const isSearch = useRef(false);
 
-  const {
-    filter: { categoryId, sortType, pageCount },
-  } = useSelector((state) => state);
+  const { categoryId, sortType, pageCount } = useSelector((state) => state.filter);
 
-  const fetchPizzas = () => {
-    axios
-      .get(
-        `https://62cb703e3e924a012866f7d4.mockapi.io/items?${
-          categoryId && `category=${categoryId}`
-        }${
-          sortType.sortValue &&
-          `&sortBy=${sortType.sortValue}&order=asc&page=${pageCount + 1}&limit=8`
-        }`
-      )
-      .then((response) => {
-        setItems(response.data.items);
-        setPagePag(response.data.count / Math.round(8));
-        setLoading(false);
-      });
+  const getPizzas = async () => {
+    dispatch(fetchPizzas({ categoryId, sortType, pageCount }));
+    window.scrollTo(0, 0);
   };
 
   useEffect(() => {
@@ -75,7 +60,7 @@ const HomePage = () => {
 
   useEffect(() => {
     if (!isSearch.current) {
-      fetchPizzas();
+      getPizzas();
     }
 
     isSearch.current = false;
@@ -91,14 +76,14 @@ const HomePage = () => {
         <Categories />
         <SortPizzas />
       </div>
-      <h2 className='content__title'>Все пиццы</h2>
+      <h2 className='content__title'>All pizzas</h2>
       <div className='content__items'>
         {loading
           ? [...new Array(6)].map((_, index) => <PizzaSkeleton key={index} />)
           : items.map((item) => <PizzaBlock key={item.id} {...item} />)}
       </div>
       <Paginator
-        pageCount={Math.ceil(pagePag)}
+        pageCount={Math.ceil(count)}
         onPageChange={(event) => onSelectPage(event.selected)}
       />
     </>
