@@ -4,11 +4,10 @@ import clsx from 'clsx';
 import { useSelector } from 'react-redux';
 import { roundTo } from 'round-to';
 import { Link } from 'react-router-dom';
+import { selectCart } from '../../redux/slices/cartSlice';
 
 const CartBottom = () => {
-  const {
-    cart: { totalPrice, items },
-  } = useSelector((state) => state);
+  const { totalPrice, items } = useSelector(selectCart);
 
   const countTotalAmount = items.map((item) => item.count).reduce((sum, acc) => sum + acc, 0);
 

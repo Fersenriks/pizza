@@ -8,7 +8,7 @@ import PizzaBlock from '../../components/PizzaBlock/PizzaBlock';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { setPageCount, setFilters } from '../../redux/slices/filterSlice';
+import { setPageCount, setFilters, selectFilter } from '../../redux/slices/filterSlice';
 import Paginator from '../../components/Paginator';
 import { fetchPizzas } from '../../redux/slices/pizzaSlice';
 
@@ -22,9 +22,9 @@ const HomePage = () => {
   const isMounted = useRef(false);
   const isSearch = useRef(false);
 
-  const { categoryId, sortType, pageCount } = useSelector((state) => state.filter);
+  const { categoryId, sortType, pageCount } = useSelector(selectFilter);
 
-  const getPizzas = async () => {
+  const getPizzas = () => {
     dispatch(fetchPizzas({ categoryId, sortType, pageCount }));
     window.scrollTo(0, 0);
   };

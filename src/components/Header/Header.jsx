@@ -6,11 +6,10 @@ import { useSelector } from 'react-redux';
 
 import logoSvg from '../../assets/img/pizza-logo.svg';
 import { roundTo } from 'round-to';
+import { selectCart } from '../../redux/slices/cartSlice';
 
 const Header = () => {
-  const {
-    cart: { totalPrice, items },
-  } = useSelector((state) => state);
+  const { totalPrice, items } = useSelector(selectCart);
   const { pathname } = useLocation();
 
   const countTotalAmount = items.map((item) => item.count).reduce((sum, acc) => sum + acc, 0);

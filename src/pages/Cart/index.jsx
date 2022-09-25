@@ -4,14 +4,12 @@ import classes from './Cart.module.scss';
 import CartItem from './CartItem';
 import CartBottom from './CartBottom';
 import { useDispatch, useSelector } from 'react-redux';
-import { deletePizzas } from '../../redux/slices/cartSlice';
+import { deletePizzas, selectCart } from '../../redux/slices/cartSlice';
 import CartEmpty from './CartEmpty/CartEmpty';
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const {
-    cart: { items },
-  } = useSelector((state) => state);
+  const { items } = useSelector(selectCart);
 
   const onClearCart = () => {
     dispatch(deletePizzas());

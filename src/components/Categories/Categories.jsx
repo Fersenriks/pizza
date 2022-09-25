@@ -1,6 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { setCategoryId } from '../../redux/slices/filterSlice';
+import { selectFilter, setCategoryId } from '../../redux/slices/filterSlice';
 
 const Categories = () => {
   const categoriesOptions = useMemo(
@@ -9,9 +10,7 @@ const Categories = () => {
   );
 
   const dispatch = useDispatch();
-  const {
-    filter: { categoryId },
-  } = useSelector((state) => state);
+  const { categoryId } = useSelector(selectFilter);
 
   const handleSelectCategory = (index) => {
     dispatch(setCategoryId(index));
@@ -34,4 +33,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default memo(Categories);
