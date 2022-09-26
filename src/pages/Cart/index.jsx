@@ -89,7 +89,7 @@ const Cart = () => {
                   strokeLinejoin='round'
                 />
               </svg>
-              <span onClick={onClearCart}>Очистить корзину</span>
+              <span onClick={onClearCart}>Clear cart</span>
             </div>
           </div>
           {items.map((pizza, id) => (

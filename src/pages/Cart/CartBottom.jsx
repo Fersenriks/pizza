@@ -18,7 +18,7 @@ const CartBottom = () => {
           Amount: <b>{countTotalAmount ? countTotalAmount : 0}</b>
         </span>
         <span>
-          Сумма заказа: <b>{roundTo(totalPrice, 2)} €</b>
+          Total price: <b>{roundTo(totalPrice, 2)} €</b>
         </span>
       </div>
       <div className={classes.cart__bottom_buttons}>
@@ -39,10 +39,10 @@ const CartBottom = () => {
             />
           </svg>
 
-          <span>Вернуться назад</span>
+          <span>Back to pizzas</span>
         </Link>
         <div className={`${classes.button}`}>
-          <span>Оплатить сейчас</span>
+          <span>Order just now</span>
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@ import SortPizzas, { sortOptions } from '../../components/SortPizzas/SortPizzas'
 import PizzaSkeleton from '../../components/PizzaBlock/PizzaSkeleton';
 import PizzaBlock from '../../components/PizzaBlock/PizzaBlock';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { setPageCount, setFilters, selectFilter } from '../../redux/slices/filterSlice';
 import Paginator from '../../components/Paginator';
@@ -18,6 +18,8 @@ const HomePage = () => {
   const {
     pizza: { items, loading, count },
   } = useSelector((state) => state);
+
+  const { search } = useLocation();
 
   const isMounted = useRef(false);
   const isSearch = useRef(false);
@@ -43,8 +45,8 @@ const HomePage = () => {
   }, [categoryId, sortType, pageCount]);
 
   useEffect(() => {
-    if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
+    if (search) {
+      const params = qs.parse(search.substring(1));
       const sortType = sortOptions.find((obj) => obj.sortValue === params.sortType);
 
       dispatch(
