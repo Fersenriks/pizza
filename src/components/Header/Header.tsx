@@ -8,11 +8,13 @@ import logoSvg from '../../assets/img/pizza-logo.svg';
 import { roundTo } from 'round-to';
 import { selectCart } from '../../redux/slices/cartSlice';
 
-const Header = () => {
+const Header: React.FC = () => {
   const { totalPrice, items } = useSelector(selectCart);
   const { pathname } = useLocation();
 
-  const countTotalAmount = items.map((item) => item.count).reduce((sum, acc) => sum + acc, 0);
+  const countTotalAmount = items
+    .map((item: any) => item.count)
+    .reduce((sum: number, acc: number) => sum + acc, 0);
 
   return (
     <header className='header'>

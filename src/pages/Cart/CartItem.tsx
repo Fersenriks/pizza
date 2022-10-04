@@ -1,10 +1,20 @@
 import React, { memo } from 'react';
-import classes from './Cart.module.scss';
+
 import clsx from 'clsx';
 import { useDispatch } from 'react-redux';
 import { decPizza, incPizza, removePizza } from '../../redux/slices/cartSlice';
 
-const CartItem = ({ count, title, price, id, imageUrl }) => {
+import classes from './Cart.module.scss';
+
+type CartItemProps = {
+  count: number;
+  title: string;
+  price: number;
+  id: number;
+  imageUrl: string;
+};
+
+const CartItem: React.FC<CartItemProps> = ({ count, title, price, id, imageUrl }) => {
   const dispatch = useDispatch();
 
   const pizzaItemInc = () => {

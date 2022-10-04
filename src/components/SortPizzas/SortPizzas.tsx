@@ -1,9 +1,14 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setSortValue } from '../../redux/slices/filterSlice';
+import { selectFilter, setSortValue } from '../../redux/slices/filterSlice';
 
-export const sortOptions = [
+type SortItem = {
+  label: string;
+  sortValue: string;
+};
+
+export const sortOptions: SortItem[] = [
   { label: 'Popularity', sortValue: 'rating' },
   { label: 'Price', sortValue: 'price' },
   { label: 'Name', sortValue: 'title' },
@@ -12,14 +17,12 @@ export const sortOptions = [
 const SortPizzas = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const sortRef = useRef(null);
+  const sortRef = useRef<HTMLDivElement>(null);
 
-  const {
-    filter: { sortType },
-  } = useSelector((state) => state);
+  const { sortType } = useSelector(selectFilter);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: any) => {
       if (!event.path.includes(sortRef.current)) {
         setOpen(false);
       }
@@ -30,12 +33,12 @@ const SortPizzas = () => {
     return () => document.body.removeEventListener('click', handleClickOutside);
   });
 
-  const handleOpenSort = (event) => {
+  const handleOpenSort = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     event.stopPropagation();
     setOpen((prevState) => !prevState);
   };
 
-  const handleSelectSort = (sortObj) => {
+  const handleSelectSort = (sortObj: SortItem) => {
     dispatch(setSortValue(sortObj));
     setOpen(false);
   };

@@ -1,12 +1,22 @@
 import React, { useMemo, useState } from 'react';
+
 import { useDispatch } from 'react-redux';
 import { addPizza } from '../../redux/slices/cartSlice';
 
-const PizzaBlock = ({ id, price, title, imageUrl, sizes, types }) => {
+type PizzaBlockProps = {
+  id: number;
+  price: number;
+  title: string;
+  imageUrl: string;
+  sizes: number[];
+  types: number[];
+};
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, price, title, imageUrl, sizes, types }) => {
   const dispatch = useDispatch();
-  const [pizzaCount, setPizzaCount] = useState(0);
-  const [pizzaType, setPizzaType] = useState(0);
-  const [pizzaSize, setPizzaSize] = useState(0);
+  const [pizzaCount, setPizzaCount] = useState<number>(0);
+  const [pizzaType, setPizzaType] = useState<number>(0);
+  const [pizzaSize, setPizzaSize] = useState<number>(0);
 
   const handleAddPizza = () => {
     setPizzaCount((prevState) => prevState + 1);
@@ -21,7 +31,7 @@ const PizzaBlock = ({ id, price, title, imageUrl, sizes, types }) => {
       <h4 className='pizza-block__title'>{title}</h4>
       <div className='pizza-block__selector'>
         <ul>
-          {types.map((type, index) => (
+          {types.map((type: number, index: number) => (
             <li
               className={pizzaType === index ? 'active' : ''}
               onClick={() => setPizzaType(type)}
@@ -32,7 +42,7 @@ const PizzaBlock = ({ id, price, title, imageUrl, sizes, types }) => {
           ))}
         </ul>
         <ul>
-          {sizes.map((size, index) => (
+          {sizes.map((size: number, index: number) => (
             <li
               onClick={() => setPizzaSize(index)}
               className={pizzaSize === index ? 'active' : ''}

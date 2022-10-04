@@ -2,7 +2,7 @@ import React from 'react';
 
 import classes from './NotFound.module.scss';
 
-const NotFound = () => {
+const NotFound: React.FC = () => {
   return (
     <div className={classes.root}>
       <h1 className={classes.title}>Ничего не найдено!</h1>

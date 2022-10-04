@@ -1,8 +1,14 @@
 import React from 'react';
-import classes from '../../pages/Home/HomePage.module.scss';
-import ReactPaginate from 'react-paginate';
 
-const Paginator = ({ ...restProps }) => {
+import ReactPaginate from 'react-paginate';
+import classes from '../../pages/Home/HomePage.module.scss';
+
+type PaginatorProps = {
+  onPageChange: any;
+  pageCount: number;
+};
+
+const Paginator: React.FC<PaginatorProps> = ({ onPageChange, pageCount }) => {
   return (
     <ReactPaginate
       className={classes.paginator}
@@ -10,8 +16,8 @@ const Paginator = ({ ...restProps }) => {
       nextLabel='>'
       pageRangeDisplayed={5}
       previousLabel='<'
-      renderOnZeroPageCount={null}
-      {...restProps}
+      pageCount={pageCount}
+      onPageChange={onPageChange}
     />
   );
 };

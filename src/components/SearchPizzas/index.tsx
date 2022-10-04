@@ -6,19 +6,23 @@ import debounce from 'lodash.debounce';
 
 import classes from './SearchPiazzas.module.scss';
 
-const SearchPizzas = ({ ...restProps }) => {
+type SearchPizzasProps = {
+  placeholder: string;
+};
+
+const SearchPizzas: React.FC<SearchPizzasProps> = ({ placeholder }) => {
   const [inputValue, setInputValue] = useState('');
   const [value, setValue] = useState('');
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const updateSearchValue = React.useCallback(
-    debounce((str) => {
+    debounce((str: string) => {
       setInputValue(str);
     }, 1000),
     []
   );
 
-  const changeInputValue = (event) => {
+  const changeInputValue = (event: { target: { value: React.SetStateAction<string> } }) => {
     setValue(event.target.value);
     updateSearchValue(value);
   };
@@ -26,7 +30,8 @@ const SearchPizzas = ({ ...restProps }) => {
   const onCancel = () => {
     setInputValue('');
     setValue('');
-    inputRef.current.focus();
+
+    inputRef.current?.focus();
   };
 
   return (
@@ -37,7 +42,7 @@ const SearchPizzas = ({ ...restProps }) => {
         ref={inputRef}
         className={classes.root}
         onChange={changeInputValue}
-        {...restProps}
+        placeholder={placeholder}
       />
       {inputValue && <CancelSvg onClick={onCancel} className={classes.cancel} />}
     </div>

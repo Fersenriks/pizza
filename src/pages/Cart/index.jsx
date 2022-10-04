@@ -92,8 +92,8 @@ const Cart = () => {
               <span onClick={onClearCart}>Clear cart</span>
             </div>
           </div>
-          {items.map((pizza, id) => (
-            <CartItem key={id} {...pizza} />
+          {items.map((pizza, index) => (
+            <CartItem key={index} {...pizza} />
           ))}
           <CartBottom />
         </div>
