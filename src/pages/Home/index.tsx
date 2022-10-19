@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
+import React, { memo, useCallback, useEffect, useRef } from 'react';
 
 import qs from 'qs';
 import Categories from '../../components/Categories/Categories';
@@ -7,7 +7,6 @@ import PizzaSkeleton from '../../components/PizzaBlock/PizzaSkeleton';
 import PizzaBlock from '../../components/PizzaBlock/PizzaBlock';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-// import FaceBookSvg from '../../assets/img/facebook.svg';
 
 import {
   setPageCount,
@@ -17,20 +16,23 @@ import {
 } from '../../redux/slices/filterSlice';
 import Paginator from '../../components/Paginator';
 import { fetchPizzas } from '../../redux/slices/pizzaSlice';
-import CircleIcon from '../../components/CircleIcon/CircleIcon';
 
-type fetchPizzasTypes = {
-  categoryId: number;
-  sortType: string;
-  pageCount: number;
+type ItemType = {
+  id: number;
+  price: number;
+  title: string;
+  imageUrl: string;
+  sizes: number[];
+  types: number[];
 };
 
-const HomePage = () => {
+const HomePage: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   // @ts-ignore
   const { items, loading, count } = useSelector((state) => state.pizza);
-
+  console.log(items);
   const { search } = useLocation();
 
   const isMounted = useRef(false);
@@ -81,7 +83,7 @@ const HomePage = () => {
     isSearch.current = false;
   }, [categoryId, sortType, pageCount]);
 
-  const onSelectPage = (page: number) => {
+  const onChangePage = (page: number) => {
     dispatch(setPageCount(page));
   };
 
@@ -99,19 +101,12 @@ const HomePage = () => {
       <div className='content__items'>
         {loading
           ? [...new Array(6)].map((_, index) => <PizzaSkeleton key={index} />)
-          : items.map((item: any) => <PizzaBlock key={item.id} {...item} />)}
+          : items.map((item: ItemType) => <PizzaBlock key={item.id} {...item} />)}
       </div>
       <Paginator
         pageCount={Math.ceil(count)}
-        onPageChange={(event: any) => onSelectPage(event.selected)}
+        onPageChange={(event) => onChangePage(event.selected)}
       />
-      <div>
-        App
-        {/*<CircleIcon>*/}
-        {/*  <FaceBookSvg />*/}
-        {/*</CircleIcon>*/}
-      </div>
-      <div>Footer</div>
     </>
   );
 };

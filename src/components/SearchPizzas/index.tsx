@@ -22,7 +22,8 @@ const SearchPizzas: React.FC<SearchPizzasProps> = ({ placeholder }) => {
     []
   );
 
-  const changeInputValue = (event: { target: { value: React.SetStateAction<string> } }) => {
+  // event ChangeEvent<HTMLInputElement>
+  const changeInputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
     updateSearchValue(value);
   };

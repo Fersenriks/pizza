@@ -7,6 +7,9 @@ type SortItem = {
   label: string;
   sortValue: string;
 };
+type PopupEvent = MouseEvent & {
+  path: Node[];
+};
 
 export const sortOptions: SortItem[] = [
   { label: 'Popularity', sortValue: 'rating' },
@@ -22,8 +25,10 @@ const SortPizzas = () => {
   const { sortType } = useSelector(selectFilter);
 
   useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      if (!event.path.includes(sortRef.current)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      const _event = event as PopupEvent;
+
+      if (sortRef.current && !_event.path.includes(sortRef.current)) {
         setOpen(false);
       }
     };

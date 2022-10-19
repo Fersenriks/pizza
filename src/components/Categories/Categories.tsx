@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { selectFilter } from '../../redux/slices/filterSlice';
 
 type CategoriesProps = {
-  onChangeCategory: any;
+  onChangeCategory: (i: number) => void;
 };
 
 const Categories: React.FC<CategoriesProps> = ({ onChangeCategory }) => {
