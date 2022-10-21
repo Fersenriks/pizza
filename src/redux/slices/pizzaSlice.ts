@@ -2,32 +2,33 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../store';
 
-export enum Statuses {
+export enum StatusesEnum {
   LOADING = 'loading',
   SUCCESS = 'success',
   ERROR = 'error',
 }
 
-export enum SortValues {
+export enum SortValuesEnum {
   RATING = 'rating',
   PRICE = 'price',
   TITLE = 'title',
 }
 
-interface FetchPizzasParams {
-  categoryId: number;
-  pageCount: number;
-  sortType: Sort;
-}
-
-type ReturnedData = {
-  items: PizzaItem[];
-  count: number;
-};
-
 type Sort = {
   label: string;
-  sortValue: SortValues.RATING | SortValues.PRICE | SortValues.TITLE;
+  sortValue: SortValuesEnum;
+};
+
+export type FetchPizzasParams = {
+  categoryId: number;
+  pageCount: number;
+  sortBy: Sort;
+};
+
+export type SearchFilterParams = {
+  categoryId: number;
+  pageCount: number;
+  sortBy: SortValuesEnum;
 };
 
 type PizzaItem = {
@@ -41,29 +42,35 @@ type PizzaItem = {
   types: number[];
 };
 
-interface PizzaSliceState {
+type ReturnedData = {
+  items: PizzaItem[];
+  count: number;
+};
+
+type PizzaSliceState = {
   items: PizzaItem[];
   count: number;
   loading?: boolean;
-  status?: Statuses.LOADING | Statuses.SUCCESS | Statuses.ERROR;
-}
+  status?: StatusesEnum.LOADING | StatusesEnum.SUCCESS | StatusesEnum.ERROR;
+};
 
 const initialState: PizzaSliceState = {
   items: [],
   count: 0,
   loading: false,
-  status: Statuses.LOADING,
+  status: StatusesEnum.LOADING,
 };
 
-export const fetchPizzas = createAsyncThunk(
+export const fetchPizzas = createAsyncThunk<ReturnedData, FetchPizzasParams>(
   'pizza/fetchPizzasStatus',
-  async (params: FetchPizzasParams) => {
-    const { categoryId, pageCount, sortType } = params;
+  async (params) => {
+    const { categoryId, pageCount, sortBy } = params;
+    const limit = 8;
 
-    const { data } = await axios.get<ReturnedData>(
+    const { data } = await axios.get(
       `https://62cb703e3e924a012866f7d4.mockapi.io/items?${categoryId && `category=${categoryId}`}${
-        sortType.sortValue &&
-        `&sortBy=${sortType.sortValue}&order=asc&page=${pageCount + 1}&limit=8`
+        sortBy.sortValue &&
+        `&sortBy=${sortBy.sortValue}&order=asc&page=${pageCount + 1}&limit=${limit}`
       }`
     );
 
@@ -90,12 +97,12 @@ export const pizzaSlice = createSlice({
       state.items = payload.items;
       state.count = payload.count / Math.round(8);
       state.loading = false;
-      state.status = Statuses.SUCCESS;
+      state.status = StatusesEnum.SUCCESS;
     });
     builder.addCase(fetchPizzas.rejected, (state) => {
       state.loading = false;
       state.items = [];
-      state.status = Statuses.ERROR;
+      state.status = StatusesEnum.ERROR;
     });
   },
 });

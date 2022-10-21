@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { addPizza } from '../../redux/slices/cartSlice';
+import { AppDispatch, useAppDispatch } from '../../redux/store';
 
 type PizzaBlockProps = {
   id: number;
@@ -13,7 +14,7 @@ type PizzaBlockProps = {
 };
 
 const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, price, title, imageUrl, sizes, types }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [pizzaCount, setPizzaCount] = useState<number>(0);
   const [pizzaType, setPizzaType] = useState<number>(0);
   const [pizzaSize, setPizzaSize] = useState<number>(0);

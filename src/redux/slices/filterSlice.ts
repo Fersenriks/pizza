@@ -1,22 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { SortValues } from './pizzaSlice';
+import { SortValuesEnum } from './pizzaSlice';
 
 export type Sort = {
   label: string;
-  sortValue: SortValues.RATING | SortValues.PRICE | SortValues.TITLE;
+  sortValue: SortValuesEnum;
 };
 
-type SortSliceState = {
+export type SortSliceState = {
   categoryId: number;
   pageCount: number;
-  sortType: Sort;
+  sortBy: Sort;
 };
 
 const initialState: SortSliceState = {
   categoryId: 0,
   pageCount: 0,
-  sortType: { label: 'Popularity', sortValue: SortValues.RATING },
+  sortBy: { label: 'Popularity', sortValue: SortValuesEnum.RATING },
 };
 
 export const filtersSlice = createSlice({
@@ -31,12 +31,12 @@ export const filtersSlice = createSlice({
       state.pageCount = action.payload;
     },
     setSortValue(state, action: PayloadAction<Sort>) {
-      state.sortType = action.payload;
+      state.sortBy = action.payload;
     },
     setFilters(state, action: PayloadAction<SortSliceState>) {
       state.categoryId = +action.payload.categoryId;
       state.pageCount = +action.payload.pageCount;
-      state.sortType = action.payload.sortType;
+      state.sortBy = action.payload.sortBy;
     },
   },
 });

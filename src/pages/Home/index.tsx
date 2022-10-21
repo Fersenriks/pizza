@@ -5,7 +5,7 @@ import Categories from '../../components/Categories/Categories';
 import SortPizzas, { sortOptions } from '../../components/SortPizzas/SortPizzas';
 import PizzaSkeleton from '../../components/PizzaBlock/PizzaSkeleton';
 import PizzaBlock from '../../components/PizzaBlock/PizzaBlock';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
@@ -13,11 +13,12 @@ import {
   setFilters,
   selectFilter,
   setCategoryId,
+  Sort,
 } from '../../redux/slices/filterSlice';
 
 import Paginator from '../../components/Paginator';
-import { fetchPizzas } from '../../redux/slices/pizzaSlice';
-import { AppDispatch, RootState } from '../../redux/store';
+import { fetchPizzas, SearchFilterParams } from '../../redux/slices/pizzaSlice';
+import { RootState, useAppDispatch } from '../../redux/store';
 
 type ItemType = {
   id: number;
@@ -29,7 +30,7 @@ type ItemType = {
 };
 
 const HomePage: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const { items, loading, count } = useSelector((state: RootState) => state.pizza);
@@ -39,17 +40,17 @@ const HomePage: React.FC = () => {
   const isMounted = useRef(false);
   const isSearch = useRef(false);
 
-  const { categoryId, sortType, pageCount } = useSelector(selectFilter);
+  const { categoryId, sortBy, pageCount } = useSelector(selectFilter);
 
   const getPizzas = () => {
-    dispatch(fetchPizzas({ categoryId, sortType, pageCount }));
+    dispatch(fetchPizzas({ categoryId, sortBy, pageCount }));
     window.scrollTo(0, 0);
   };
 
   useEffect(() => {
     if (isMounted.current) {
       const queryString = qs.stringify({
-        sortType: sortType.sortValue,
+        sortBy: sortBy.sortValue,
         categoryId,
         pageCount,
       });
@@ -57,21 +58,19 @@ const HomePage: React.FC = () => {
     }
 
     isMounted.current = true;
-  }, [categoryId, sortType, pageCount]);
+  }, [categoryId, sortBy, pageCount]);
 
   useEffect(() => {
     if (search) {
-      const params = qs.parse(search.substring(1));
+      const params = qs.parse(search.substring(1)) as unknown as SearchFilterParams;
 
-      const sortType =
-        sortOptions.find((obj) => obj.sortValue === params.sortType) || sortOptions[0];
+      const sortBy: Sort =
+        sortOptions.find((obj) => obj.sortValue === params.sortBy) || sortOptions[0];
 
       dispatch(
         setFilters({
           ...params,
-          sortType,
-          categoryId: 0,
-          pageCount: 0,
+          sortBy,
         })
       );
 
@@ -85,7 +84,7 @@ const HomePage: React.FC = () => {
     }
 
     isSearch.current = false;
-  }, [categoryId, sortType, pageCount]);
+  }, [categoryId, sortBy, pageCount]);
 
   const onChangePage = (page: number) => {
     dispatch(setPageCount(page));

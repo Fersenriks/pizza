@@ -2,14 +2,15 @@ import React, { memo } from 'react';
 
 import CartItem from './CartItem';
 import CartBottom from './CartBottom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { deletePizzas, selectCart } from '../../redux/slices/cartSlice';
 import CartEmpty from './CartEmpty/CartEmpty';
+import { useAppDispatch } from '../../redux/store';
 
 import classes from './Cart.module.scss';
 
 const Cart: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { items } = useSelector(selectCart);
 
   const onClearCart = () => {

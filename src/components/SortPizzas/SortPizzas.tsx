@@ -1,25 +1,27 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectFilter, setSortValue, Sort } from '../../redux/slices/filterSlice';
-import { SortValues } from '../../redux/slices/pizzaSlice';
+
+import { useAppDispatch } from '../../redux/store';
+import { SortValuesEnum } from '../../redux/slices/pizzaSlice';
 
 type PopupEvent = MouseEvent & {
   path: Node[];
 };
 
 export const sortOptions: Sort[] = [
-  { label: 'Popularity', sortValue: SortValues.RATING },
-  { label: 'Price', sortValue: SortValues.PRICE },
-  { label: 'Name', sortValue: SortValues.TITLE },
+  { label: 'Popularity', sortValue: SortValuesEnum.RATING },
+  { label: 'Price', sortValue: SortValuesEnum.PRICE },
+  { label: 'Name', sortValue: SortValuesEnum.TITLE },
 ];
 
 const SortPizzas = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
   const sortRef = useRef<HTMLDivElement>(null);
 
-  const { sortType } = useSelector(selectFilter);
+  const { sortBy } = useSelector(selectFilter);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -62,7 +64,7 @@ const SortPizzas = () => {
           />
         </svg>
         <b>Sort by:</b>
-        <span onClick={(event) => handleOpenSort(event)}>{sortType.label}</span>
+        <span onClick={(event) => handleOpenSort(event)}>{sortBy.label}</span>
       </div>
       {open && (
         <div className='sort__popup'>
@@ -71,7 +73,7 @@ const SortPizzas = () => {
               <li
                 key={index}
                 onClick={() => handleSelectSort(obj)}
-                className={obj.label === sortType.label ? 'active' : ''}
+                className={obj.label === sortBy.label ? 'active' : ''}
               >
                 {obj.label}
               </li>
