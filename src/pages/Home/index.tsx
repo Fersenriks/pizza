@@ -67,8 +67,6 @@ const HomePage: React.FC = () => {
       const sortType =
         sortOptions.find((obj) => obj.sortValue === params.sortType) || sortOptions[0];
 
-      console.log(sortType);
-
       dispatch(
         setFilters({
           ...params,
