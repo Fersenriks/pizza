@@ -1,12 +1,14 @@
 import React from 'react';
-import classes from './Cart.module.scss';
+
 import clsx from 'clsx';
 import { useSelector } from 'react-redux';
 import { roundTo } from 'round-to';
 import { Link } from 'react-router-dom';
 import { selectCart } from '../../redux/slices/cartSlice';
 
-const CartBottom = () => {
+import classes from './Cart.module.scss';
+
+const CartBottom: React.FC = () => {
   const { totalPrice, items } = useSelector(selectCart);
 
   const countTotalAmount = items.map((item) => item.count).reduce((sum, acc) => sum + acc, 0);
@@ -38,10 +40,9 @@ const CartBottom = () => {
               strokeLinejoin='round'
             />
           </svg>
-
           <span>Back to pizzas</span>
         </Link>
-        <div className={`${classes.button}`}>
+        <div className={classes.button}>
           <span>Order just now</span>
         </div>
       </div>
