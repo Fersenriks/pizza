@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
+import { SortValues } from './pizzaSlice';
 
 export type Sort = {
   label: string;
-  sortValue: 'rating' | 'price' | 'title';
+  sortValue: SortValues.RATING | SortValues.PRICE | SortValues.TITLE;
 };
 
 type SortSliceState = {
@@ -15,7 +16,7 @@ type SortSliceState = {
 const initialState: SortSliceState = {
   categoryId: 0,
   pageCount: 0,
-  sortType: { label: 'Popularity', sortValue: 'rating' },
+  sortType: { label: 'Popularity', sortValue: SortValues.RATING },
 };
 
 export const filtersSlice = createSlice({

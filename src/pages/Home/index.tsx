@@ -17,7 +17,7 @@ import {
 
 import Paginator from '../../components/Paginator';
 import { fetchPizzas } from '../../redux/slices/pizzaSlice';
-import { RootState } from '../../redux/store';
+import { AppDispatch, RootState } from '../../redux/store';
 
 type ItemType = {
   id: number;
@@ -29,7 +29,7 @@ type ItemType = {
 };
 
 const HomePage: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
   const { items, loading, count } = useSelector((state: RootState) => state.pizza);
@@ -42,7 +42,6 @@ const HomePage: React.FC = () => {
   const { categoryId, sortType, pageCount } = useSelector(selectFilter);
 
   const getPizzas = () => {
-    // @ts-ignore
     dispatch(fetchPizzas({ categoryId, sortType, pageCount }));
     window.scrollTo(0, 0);
   };
