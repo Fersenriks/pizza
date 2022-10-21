@@ -14,8 +14,10 @@ import {
   selectFilter,
   setCategoryId,
 } from '../../redux/slices/filterSlice';
+
 import Paginator from '../../components/Paginator';
 import { fetchPizzas } from '../../redux/slices/pizzaSlice';
+import { RootState } from '../../redux/store';
 
 type ItemType = {
   id: number;
@@ -30,9 +32,8 @@ const HomePage: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // @ts-ignore
-  const { items, loading, count } = useSelector((state) => state.pizza);
-  console.log(items);
+  const { items, loading, count } = useSelector((state: RootState) => state.pizza);
+
   const { search } = useLocation();
 
   const isMounted = useRef(false);
@@ -62,12 +63,18 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     if (search) {
       const params = qs.parse(search.substring(1));
-      const sortType = sortOptions.find((obj) => obj.sortValue === params.sortType);
+
+      const sortType =
+        sortOptions.find((obj) => obj.sortValue === params.sortType) || sortOptions[0];
+
+      console.log(sortType);
 
       dispatch(
         setFilters({
           ...params,
           sortType,
+          categoryId: 0,
+          pageCount: 0,
         })
       );
 

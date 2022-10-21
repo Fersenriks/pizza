@@ -9,7 +9,7 @@ import { roundTo } from 'round-to';
 import { selectCart } from '../../redux/slices/cartSlice';
 
 type ItemType = {
-  count?: number;
+  count: number;
   title: string;
   price: number;
   id: number;

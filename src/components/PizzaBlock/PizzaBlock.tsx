@@ -20,7 +20,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, price, title, imageUrl, siz
 
   const handleAddPizza = () => {
     setPizzaCount((prevState) => prevState + 1);
-    dispatch(addPizza({ id, price, title, imageUrl, sizes }));
+    dispatch(addPizza({ id, price, title, imageUrl, sizes, count: pizzaCount }));
   };
 
   const pizzaTypes = useMemo(() => ['Thin', 'Traditional'], []);

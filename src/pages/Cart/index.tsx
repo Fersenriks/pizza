@@ -1,13 +1,14 @@
 import React, { memo } from 'react';
 
-import classes from './Cart.module.scss';
 import CartItem from './CartItem';
 import CartBottom from './CartBottom';
 import { useDispatch, useSelector } from 'react-redux';
 import { deletePizzas, selectCart } from '../../redux/slices/cartSlice';
 import CartEmpty from './CartEmpty/CartEmpty';
 
-const Cart = () => {
+import classes from './Cart.module.scss';
+
+const Cart: React.FC = () => {
   const dispatch = useDispatch();
   const { items } = useSelector(selectCart);
 

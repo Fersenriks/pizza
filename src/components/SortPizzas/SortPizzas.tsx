@@ -1,17 +1,13 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { selectFilter, setSortValue } from '../../redux/slices/filterSlice';
+import { selectFilter, setSortValue, Sort } from '../../redux/slices/filterSlice';
 
-type SortItem = {
-  label: string;
-  sortValue: string;
-};
 type PopupEvent = MouseEvent & {
   path: Node[];
 };
 
-export const sortOptions: SortItem[] = [
+export const sortOptions: Sort[] = [
   { label: 'Popularity', sortValue: 'rating' },
   { label: 'Price', sortValue: 'price' },
   { label: 'Name', sortValue: 'title' },
@@ -43,7 +39,7 @@ const SortPizzas = () => {
     setOpen((prevState) => !prevState);
   };
 
-  const handleSelectSort = (sortObj: SortItem) => {
+  const handleSelectSort = (sortObj: Sort) => {
     dispatch(setSortValue(sortObj));
     setOpen(false);
   };
