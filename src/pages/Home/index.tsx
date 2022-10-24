@@ -19,6 +19,7 @@ import {
 import Paginator from '../../components/Paginator';
 import { fetchPizzas, SearchFilterParams } from '../../redux/slices/pizzaSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
+import { selectCart } from '../../redux/slices/cartSlice';
 
 type ItemType = {
   id: number;
@@ -34,6 +35,7 @@ const HomePage: React.FC = () => {
   const navigate = useNavigate();
 
   const { items, loading, count } = useSelector((state: RootState) => state.pizza);
+  const cart = useSelector(selectCart);
 
   const { search } = useLocation();
 

@@ -1,8 +1,8 @@
-import React, { useMemo, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 
-import { useDispatch } from 'react-redux';
-import { addPizza } from '../../redux/slices/cartSlice';
-import { AppDispatch, useAppDispatch } from '../../redux/store';
+import { addPizza, selectCart } from '../../redux/slices/cartSlice';
+import { useAppDispatch } from '../../redux/store';
+import { useSelector } from 'react-redux';
 
 type PizzaBlockProps = {
   id: number;
@@ -18,6 +18,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, price, title, imageUrl, siz
   const [pizzaCount, setPizzaCount] = useState<number>(0);
   const [pizzaType, setPizzaType] = useState<number>(0);
   const [pizzaSize, setPizzaSize] = useState<number>(0);
+  const { items } = useSelector(selectCart);
 
   const handleAddPizza = () => {
     setPizzaCount((prevState) => prevState + 1);
@@ -25,6 +26,17 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, price, title, imageUrl, siz
   };
 
   const pizzaTypes = useMemo(() => ['Thin', 'Traditional'], []);
+
+  useEffect(() => {
+    const index = items.findIndex((item) => item.id === id);
+
+    if (index === -1) {
+      return;
+    }
+
+    const amount = items[index].count;
+    setPizzaCount(amount);
+  }, []);
 
   return (
     <div className='pizza-block'>
@@ -77,4 +89,4 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, price, title, imageUrl, siz
   );
 };
 
-export default PizzaBlock;
+export default memo(PizzaBlock);
